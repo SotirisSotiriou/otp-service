@@ -83,27 +83,27 @@ def generate_otp_route():
     mysql.connection.commit()
     cur.close()
 
-    # # Fetch user information from the database
-    # cur = mysql.connection.cursor()
-    # cur.execute("SELECT email, phone FROM users WHERE id = %s", (user_id,))
-    # user_info = cur.fetchone()
-    # cur.close()
+    # Fetch user information from the database
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT email, phone FROM users WHERE id = %s", (user_id,))
+    user_info = cur.fetchone()
+    cur.close()
 
-    # if not user_info:
-    #     return jsonify({'message': 'User  not found.'}), 404
+    if not user_info:
+        return jsonify({'message': 'User  not found.'}), 404
 
-    # email, phone = user_info
+    email, phone = user_info
 
 
-    # # Send OTP via email and/or SMS if defined
-    # if email:
-    #     send_email(email, otp)
-    # if phone:
-    #     send_sms(phone, otp)
+    # Send OTP via email and/or SMS if defined
+    if email:
+        send_email(email, otp)
+    if phone:
+        send_sms(phone, otp)
 
-    # return jsonify({'message': 'OTP sent via email and/or SMS.'}), 201
+    return jsonify({'message': 'OTP sent via email and/or SMS.'}), 201
 
-    return jsonify({'otp': otp, 'expires_at': expires_at.strftime('%Y-%m-%d %H:%M:%S')}), 201
+    # return jsonify({'otp': otp, 'expires_at': expires_at.strftime('%Y-%m-%d %H:%M:%S')}), 201
 
 @app.route('/validate_otp', methods=['POST'])
 def validate_otp_route():
