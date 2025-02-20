@@ -127,4 +127,4 @@ def validate_otp_route():
         return jsonify({'message': 'OTP is invalid or expired.'}), 400
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')
